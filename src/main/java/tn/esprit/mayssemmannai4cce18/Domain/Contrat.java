@@ -25,6 +25,6 @@ public class Contrat {
     @OneToOne
     private Reservation reservation;
 
-    @OneToMany(mappedBy = "contrat")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "contrat", fetch = FetchType.EAGER)
     private List<Paiement> paiements;
 }

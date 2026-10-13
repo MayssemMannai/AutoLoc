@@ -21,9 +21,9 @@ public class Agence {
     private String adresse;
     private String telephone;
 
-    @OneToMany(mappedBy = "agence")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "agence", fetch = FetchType.EAGER)
     private List<Employe> employes;
 
-    @OneToMany(mappedBy = "agence")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "agence", fetch = FetchType.EAGER)
     private List<Vehicule> vehicules;
 }

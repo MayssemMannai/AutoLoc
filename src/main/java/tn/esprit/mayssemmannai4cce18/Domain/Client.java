@@ -24,6 +24,6 @@ public class Client {
     private String numPermis;
     private LocalDate dateInscription;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 }

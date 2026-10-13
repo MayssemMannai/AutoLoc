@@ -27,6 +27,6 @@ public class Reservation {
     @ManyToOne
     private Client client;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "reservation", fetch = FetchType.EAGER)
     private Contrat contrat;
 }

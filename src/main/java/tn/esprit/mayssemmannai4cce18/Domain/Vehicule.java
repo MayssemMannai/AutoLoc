@@ -26,13 +26,13 @@ public class Vehicule {
     @ManyToOne
     private Agence agence;
 
-    @OneToMany(mappedBy = "vehicule")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "vehicule", fetch = FetchType.EAGER)
     private List<Maintenance> maintenances;
 
     @ManyToMany
     private List<Equipement> equipements;
 
-    @OneToMany(mappedBy = "vehicule")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "vehicule", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
 }
