@@ -10,5 +10,5 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/vehicules")
 @RequiredArgsConstructor
 public class VehiculeRestController {
-    private final IVehiculeService vehiculeService;
+    private IVehiculeService vehiculeService;
 }
