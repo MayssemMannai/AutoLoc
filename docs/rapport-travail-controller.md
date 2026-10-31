@@ -45,7 +45,7 @@ OpenAPI    : http://localhost:8085/api/v3/api-docs
 
 La collection importable se trouve ici :
 
-`postman/AutoLoc-Vehicules.postman_collection.json`
+`postman/AutoLoc-Client-Vehicule.postman_collection.json`
 
 Elle contient cinq requêtes exécutables dans cet ordre :
 

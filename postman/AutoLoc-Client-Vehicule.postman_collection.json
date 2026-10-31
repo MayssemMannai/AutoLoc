@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "AutoLoc - Client et Vehicule CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "CRUD tests for Client and Vehicule using the full API URL. Run each folder in order."
+  },
+  "variable": [
+    { "key": "vehiculeId", "value": "" },
+    { "key": "clientId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "VEHICULE",
+      "item": [
+        {
+          "name": "1 - create vehicule",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"immatriculation\": \"TEST-001\",\n  \"marque\": \"Toyota\",\n  \"modele\": \"Yaris\",\n  \"categorie\": \"CITADINE\",\n  \"tarifJournalier\": 120.50,\n  \"statut\": \"DISPONIBLE\"\n}" },
+            "url": "http://localhost:8085/api/vehicules"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is successful', function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+            "const body = pm.response.json();",
+            "pm.expect(body.idVehicule).to.exist;",
+            "pm.collectionVariables.set('vehiculeId', body.idVehicule);"
+          ] } }]
+        },
+        {
+          "name": "2 - findAll vehicules",
+          "request": { "method": "GET", "url": "http://localhost:8085/api/vehicules" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Response is an array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"
+          ] } }]
+        },
+        {
+          "name": "3 - findById vehicule",
+          "request": { "method": "GET", "url": "http://localhost:8085/api/vehicules/{{vehiculeId}}" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Returned ID matches created ID', function () { pm.expect(pm.response.json().idVehicule).to.eql(Number(pm.collectionVariables.get('vehiculeId'))); });"
+          ] } }]
+        },
+        {
+          "name": "4 - update vehicule",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"immatriculation\": \"TEST-001\",\n  \"marque\": \"Toyota\",\n  \"modele\": \"Yaris Updated\",\n  \"categorie\": \"CITADINE\",\n  \"tarifJournalier\": 135.00,\n  \"statut\": \"LOUE\"\n}" },
+            "url": "http://localhost:8085/api/vehicules/{{vehiculeId}}"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Model was updated', function () { pm.expect(pm.response.json().modele).to.eql('Yaris Updated'); });"
+          ] } }]
+        },
+        {
+          "name": "5 - deleteById vehicule",
+          "request": { "method": "DELETE", "url": "http://localhost:8085/api/vehicules/{{vehiculeId}}" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is successful', function () { pm.expect(pm.response.code).to.be.oneOf([200, 204]); });"
+          ] } }]
+        }
+      ]
+    },
+    {
+      "name": "CLIENT",
+      "item": [
+        {
+          "name": "1 - create client",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Mannai\",\n  \"prenom\": \"Mayssem\",\n  \"email\": \"mayssem.test@example.com\",\n  \"telephone\": \"22123456\",\n  \"numPermis\": \"PERMIS-001\",\n  \"dateInscription\": \"2026-10-31\"\n}" },
+            "url": "http://localhost:8085/api/clients"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is successful', function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+            "const body = pm.response.json();",
+            "pm.expect(body.idClient).to.exist;",
+            "pm.collectionVariables.set('clientId', body.idClient);"
+          ] } }]
+        },
+        {
+          "name": "2 - findAll clients",
+          "request": { "method": "GET", "url": "http://localhost:8085/api/clients" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Response is an array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"
+          ] } }]
+        },
+        {
+          "name": "3 - findById client",
+          "request": { "method": "GET", "url": "http://localhost:8085/api/clients/{{clientId}}" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Returned ID matches created ID', function () { pm.expect(pm.response.json().idClient).to.eql(Number(pm.collectionVariables.get('clientId'))); });"
+          ] } }]
+        },
+        {
+          "name": "4 - update client",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Mannai Updated\",\n  \"prenom\": \"Mayssem\",\n  \"email\": \"mayssem.updated@example.com\",\n  \"telephone\": \"22123456\",\n  \"numPermis\": \"PERMIS-001\",\n  \"dateInscription\": \"2026-10-31\"\n}" },
+            "url": "http://localhost:8085/api/clients/{{clientId}}"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+            "pm.test('Name was updated', function () { pm.expect(pm.response.json().nom).to.eql('Mannai Updated'); });"
+          ] } }]
+        },
+        {
+          "name": "5 - deleteById client",
+          "request": { "method": "DELETE", "url": "http://localhost:8085/api/clients/{{clientId}}" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status is successful', function () { pm.expect(pm.response.code).to.be.oneOf([200, 204]); });"
+          ] } }]
+        }
+      ]
+    }
+  ]
+}
